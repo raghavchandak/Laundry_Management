@@ -25,37 +25,24 @@ class _HomeState extends State<Home> {
     'Misc'
   ];
 
-  var clothcount = new List<int>.generate(13, (i) => i = 0);
+  List<int> prices = [14,12,15,11,15,30,4,10,10,15,8,80,0];
 
-/*
-  List<Widget> createDisplayScreenWidgetList(List<int> clothPositions) {
-    List<Widget> finalWidgetList;
-    for (int i = 0; i < clothPositions.length; i++) {
-      if (clothPositions[i] != 0) {
-        finalWidgetList.add(
-          Row(
-            children: <Widget>[
-              Text(
-                '${this.clothes[i]} :',
-                style: TextStyle(color: Colors.black),
-              ),
-              Text(
-                clothPositions[i].toString(),
-                style: TextStyle(color: Colors.black),
-              ),
-            ],
-          ),
-        );
-      }
-    }
-    return finalWidgetList;
-  }
-*/
+  var clothcount = new List<int>.generate(13, (i) => i = 0);
 
 //  0: increase, 1: decrease
   void changeClothCount(int i, int j) {
     if (j == 0) this.clothcount[i]++;
     if (j == 1) this.clothcount[i]--;
+  }
+
+  int getTotal()
+  {
+    int total = 0;
+    for(int i = 0; i < prices.length; i++)
+    {
+      total+= clothcount[i] * prices[i];
+    }
+    return total;
   }
 
   @override
@@ -84,6 +71,7 @@ class _HomeState extends State<Home> {
                       changeClothCount: changeClothCount,
                       cloth: clothes[i],
                       clothNo: i,
+                      price: prices[i],
                     );
                   }),
             ),
@@ -106,6 +94,7 @@ class _HomeState extends State<Home> {
                       builder: (BuildContext context) => Display_screen(
                         cloth: clothes, // List<String>
                         count: clothcount, // List<int>
+                        total : getTotal(),
                       ),
                     ),
                   );

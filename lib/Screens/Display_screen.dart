@@ -3,18 +3,26 @@ import 'package:flutter/material.dart';
 class Display_screen extends StatelessWidget {
   List cloth;
   List count;
+  int total;
 
   Widget createWidget(int i) {
     if (count[i] != 0)
       return Row(
         children: <Widget>[
           Text(
-            '${cloth[i]} :',
-            style: TextStyle(color: Colors.black),
+            '${cloth[i]} : ',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 25.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Text(
             count[i].toString(),
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20.0,
+            )
           ),
         ],
       );
@@ -25,7 +33,8 @@ class Display_screen extends StatelessWidget {
       );
   }
 
-  Display_screen({this.cloth, this.count});
+  Display_screen({this.cloth, this.count, this.total});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,10 +57,16 @@ class Display_screen extends StatelessWidget {
             borderRadius: BorderRadius.circular(25.0),
             color: Colors.white,
           ),
-          child: ListView(
-            children: <Widget>[
-              for (int i = 0; i < count.length; i++) createWidget(i),
-            ],
+          child: Padding(
+            padding: EdgeInsets.all(20.0),
+            child: ListView(
+              children: <Widget>[
+                for (int i = 0; i < count.length; i++) createWidget(i),
+                Text('- - - - - - - - - - - - - - - - - - - -'),
+                Text(
+                    'Total : Rs. $total , and cost of miscellaneous items, if any'),
+              ],
+            ),
           ),
         ),
       ),

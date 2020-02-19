@@ -30,9 +30,13 @@ flutter:
     - images/
 
   fonts:
-    - family: KellySlab
+    - family: Montserrat
       fonts:
-        - asset: fonts/KellySlab-Regular.ttf
+        - asset: fonts/Montserrat-Regular.ttf
+
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Thin.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

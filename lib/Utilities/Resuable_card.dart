@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class Reusable_card extends StatefulWidget {
   String cloth;
   int clothNo;
+  int price;
 
   Function(int, int) changeClothCount;
 
-  Reusable_card({this.cloth, this.clothNo, this.changeClothCount});
+  Reusable_card({this.cloth, this.clothNo, this.changeClothCount,this.price});
 
   @override
   _Reusable_cardState createState() => _Reusable_cardState();
@@ -42,13 +43,15 @@ class _Reusable_cardState extends State<Reusable_card> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32.0,
-                    fontFamily: 'KellySlab',
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(
-                  'Price:',
+                  'Price: Rs. ${widget.price}',
                   style: TextStyle(
                     color: Colors.white,
+                    fontFamily: 'Montserrat',
                     fontSize: 20.0,
                   ),
                 ),
