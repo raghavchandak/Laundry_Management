@@ -7,24 +7,36 @@ class Display_screen extends StatelessWidget {
 
   Widget createWidget(int i) {
     if (count[i] != 0)
-      return Row(
-        children: <Widget>[
-          Text(
-            '${cloth[i]} : ',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 25.0,
-              fontWeight: FontWeight.bold,
+      return Card(
+        child: Container(
+          padding: EdgeInsets.only(left: 20.0),
+          height: 50.0,
+          decoration: new BoxDecoration(
+            color: Colors.purple,
+            gradient: new LinearGradient(
+              colors: [Colors.white, Color(0xFFFF80AB)],
             ),
           ),
-          Text(
-            count[i].toString(),
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20.0,
-            )
+          child: Row(
+            children: <Widget>[
+              Text(
+                '${cloth[i]} : ',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                count[i].toString(),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                )
+              ),
+            ],
           ),
-        ],
+        ),
       );
     else
       return Container(
