@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 
 class Display_screen extends StatelessWidget {
   List cloth;
@@ -12,9 +14,10 @@ class Display_screen extends StatelessWidget {
           padding: EdgeInsets.only(left: 20.0),
           height: 50.0,
           decoration: new BoxDecoration(
+            borderRadius: BorderRadius.circular(7.5),
             color: Colors.purple,
             gradient: new LinearGradient(
-              colors: [Colors.white, Color(0xFFFF80AB)],
+              colors: [Color(0xFFF7D7D7), Color(0xFFF8BBD0)],
             ),
           ),
           child: Row(
@@ -22,7 +25,7 @@ class Display_screen extends StatelessWidget {
               Text(
                 '${cloth[i]} : ',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Color(0xFF707070),
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -30,9 +33,10 @@ class Display_screen extends StatelessWidget {
               Text(
                 count[i].toString(),
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Color(0xFF707070),
                   fontSize: 20.0,
-                )
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -46,6 +50,8 @@ class Display_screen extends StatelessWidget {
   }
 
   Display_screen({this.cloth, this.count, this.total});
+
+  Animation animation;
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +72,43 @@ class Display_screen extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.only(top: 30.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.0),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(25.0),topRight: Radius.circular(25.0)),
             color: Colors.white,
           ),
           child: Padding(
             padding: EdgeInsets.all(20.0),
-            child: ListView(
+            child: Column(
               children: <Widget>[
-                for (int i = 0; i < count.length; i++) createWidget(i),
-                Text('- - - - - - - - - - - - - - - - - - - -'),
-                Text(
-                    'Total : Rs. $total , and cost of miscellaneous items, if any'),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.76,
+                  child: ListView(
+                    children: <Widget>[
+                      for (int i = 0; i < count.length; i++) createWidget(i),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 45.0,
+                  width: MediaQuery.of(context).size.width * 1,
+                  color: Colors.blue,
+                  child: Row(
+                    children: <Widget>[
+                      Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
+                      Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
+                      Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
+                      Center(
+                        child: Text(
+                          'Total : Rs. $total + Miscellanous',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
