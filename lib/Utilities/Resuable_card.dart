@@ -4,17 +4,18 @@ class Reusable_card extends StatefulWidget {
   String cloth;
   int clothNo;
   int price;
+  int quantity;
 
   Function(int, int) changeClothCount;
 
-  Reusable_card({this.cloth, this.clothNo, this.changeClothCount,this.price});
+  Reusable_card({this.cloth, this.clothNo, this.changeClothCount,this.price,this.quantity});
 
   @override
   _Reusable_cardState createState() => _Reusable_cardState();
 }
 
 class _Reusable_cardState extends State<Reusable_card> {
-  int quantity = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +78,11 @@ class _Reusable_cardState extends State<Reusable_card> {
                     setState(() {
 //                      increment cloth count at position
                       widget.changeClothCount(widget.clothNo, 0);
-                      quantity++;
                     });
                   },
                 ),
                 Text(
-                  '$quantity',
+                  '${widget.quantity}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 30.0,
@@ -96,10 +96,9 @@ class _Reusable_cardState extends State<Reusable_card> {
                   onPressed: () {
                     setState(
                       () {
-//                           decrement cloth count
-                        if (quantity > 0) {
+//                          decrement cloth count
+                        if (widget.quantity > 0) {
                           widget.changeClothCount(widget.clothNo, 1);
-                          quantity--;
                         }
                       },
                     );

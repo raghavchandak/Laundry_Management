@@ -1,14 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
+import 'package:swipedetector/swipedetector.dart';
 
-class Display_screen extends StatelessWidget {
+class Display_screen extends StatefulWidget {
   List cloth;
   List count;
   int total;
 
+  Display_screen({this.cloth, this.count, this.total});
+
+  @override
+  _Display_screenState createState() => _Display_screenState();
+}
+
+class _Display_screenState extends State<Display_screen>{
   Widget createWidget(int i) {
-    if (count[i] != 0)
+    if (widget.count[i] != 0)
       return Card(
         child: Container(
           padding: EdgeInsets.only(left: 20.0),
@@ -23,7 +31,7 @@ class Display_screen extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                '${cloth[i]} : ',
+                '${widget.cloth[i]} : ',
                 style: TextStyle(
                   color: Color(0xFF707070),
                   fontSize: 25.0,
@@ -31,7 +39,7 @@ class Display_screen extends StatelessWidget {
                 ),
               ),
               Text(
-                count[i].toString(),
+                widget.count[i].toString(),
                 style: TextStyle(
                   color: Color(0xFF707070),
                   fontSize: 20.0,
@@ -49,12 +57,7 @@ class Display_screen extends StatelessWidget {
       );
   }
 
-  Display_screen({this.cloth, this.count, this.total});
-
-  Animation animation;
-
-  @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -83,31 +86,36 @@ class Display_screen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.76,
                   child: ListView(
                     children: <Widget>[
-                      for (int i = 0; i < count.length; i++) createWidget(i),
+                      for (int i = 0; i < widget.count.length; i++) createWidget(i),
                     ],
                   ),
                 ),
-                Container(
-                  height: 45.0,
-                  width: MediaQuery.of(context).size.width * 1,
-                  color: Colors.blue,
-                  child: Row(
-                    children: <Widget>[
-                      Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
-                      Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
-                      Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
-                      Center(
-                        child: Text(
-                          'Total : Rs. $total + Miscellanous',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
+                SwipeDetector(
+                  child: Container(
+                    height: 45.0,
+                    width: MediaQuery.of(context).size.width * 1,
+                    color: Colors.blue,
+                    child: Row(
+                      children: <Widget>[
+                        Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
+                        Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
+                        Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
+                        Center(
+                          child: Text(
+                            'Total : Rs. ${widget.total} + Miscellanous',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
+                  onSwipeRight: (){
+                    print('Swiped!');
+                  },
                 )
               ],
             ),

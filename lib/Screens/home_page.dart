@@ -31,8 +31,10 @@ class _HomeState extends State<Home> {
 
 //  0: increase, 1: decrease
   void changeClothCount(int i, int j) {
-    if (j == 0) this.clothcount[i]++;
-    if (j == 1) this.clothcount[i]--;
+    setState(() {
+      if (j == 0) this.clothcount[i]++;
+      if (j == 1) this.clothcount[i]--;
+    });
   }
 
   int getTotal()
@@ -72,6 +74,7 @@ class _HomeState extends State<Home> {
                       cloth: clothes[i],
                       clothNo: i,
                       price: prices[i],
+                      quantity: clothcount[i],
                     );
                   }),
             ),
