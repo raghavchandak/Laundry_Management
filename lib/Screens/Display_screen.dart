@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:swipedetector/swipedetector.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Display_screen extends StatefulWidget {
   List cloth;
@@ -14,7 +15,7 @@ class Display_screen extends StatefulWidget {
   _Display_screenState createState() => _Display_screenState();
 }
 
-class _Display_screenState extends State<Display_screen>{
+class _Display_screenState extends State<Display_screen> {
   Widget createWidget(int i) {
     if (widget.count[i] != 0)
       return Card(
@@ -57,7 +58,7 @@ class _Display_screenState extends State<Display_screen>{
       );
   }
 
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -75,7 +76,9 @@ class _Display_screenState extends State<Display_screen>{
         child: Container(
           margin: EdgeInsets.only(top: 30.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(25.0),topRight: Radius.circular(25.0)),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25.0),
+                topRight: Radius.circular(25.0)),
             color: Colors.white,
           ),
           child: Padding(
@@ -86,20 +89,26 @@ class _Display_screenState extends State<Display_screen>{
                   height: MediaQuery.of(context).size.height * 0.76,
                   child: ListView(
                     children: <Widget>[
-                      for (int i = 0; i < widget.count.length; i++) createWidget(i),
+                      for (int i = 0; i < widget.count.length; i++)
+                        createWidget(i),
                     ],
                   ),
                 ),
-                SwipeDetector(
+                Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: 0.25,
                   child: Container(
                     height: 45.0,
                     width: MediaQuery.of(context).size.width * 1,
-                    color: Colors.blue,
+                    color: Color(0xFF2282B9),
                     child: Row(
                       children: <Widget>[
-                        Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
-                        Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
-                        Icon(EvilIcons.chevron_right,size: 25.0,color: Colors.white),
+                        Icon(EvilIcons.chevron_right,
+                            size: 25.0, color: Colors.white),
+                        Icon(EvilIcons.chevron_right,
+                            size: 25.0, color: Colors.white),
+                        Icon(EvilIcons.chevron_right,
+                            size: 25.0, color: Colors.white),
                         Center(
                           child: Text(
                             'Total : Rs. ${widget.total} + Miscellanous',
@@ -113,9 +122,14 @@ class _Display_screenState extends State<Display_screen>{
                       ],
                     ),
                   ),
-                  onSwipeRight: (){
-                    print('Swiped!');
-                  },
+                  actions: <Widget>[
+                    IconSlideAction(
+                      caption: 'Save',
+                      color: Color(0xFF4EB44B),
+                      icon: Icons.check,
+                      foregroundColor: Colors.white,
+                    ),
+                  ],
                 )
               ],
             ),
