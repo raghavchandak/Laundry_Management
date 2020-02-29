@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
-import 'package:swipedetector/swipedetector.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Display_screen extends StatefulWidget {
@@ -14,7 +13,7 @@ class Display_screen extends StatefulWidget {
   @override
   _Display_screenState createState() => _Display_screenState();
 }
-
+//TODO: Extract count functionality, extract all complex widgets.
 class _Display_screenState extends State<Display_screen> {
   Widget createWidget(int i) {
     if (widget.count[i] != 0)
@@ -57,7 +56,7 @@ class _Display_screenState extends State<Display_screen> {
         width: 0.0,
       );
   }
-
+  //TODO: Extract widgets
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -85,8 +84,7 @@ class _Display_screenState extends State<Display_screen> {
             padding: EdgeInsets.all(20.0),
             child: Column(
               children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.76,
+                Expanded(
                   child: ListView(
                     children: <Widget>[
                       for (int i = 0; i < widget.count.length; i++)

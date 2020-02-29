@@ -9,6 +9,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  //TODO: Create a model folder, make Home class, encapsulate and import.
   List<String> clothes = [
     'Shirt',
     'T-Shirt',
@@ -47,6 +48,7 @@ class _HomeState extends State<Home> {
     return total;
   }
 
+  //TODO: Extract Scaffold widgets into their own reusable components, in Utilities.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +81,7 @@ class _HomeState extends State<Home> {
                   }),
             ),
 
-            // Done Button
+            //TODO: Done Button - Extract to Utils and Extract func also
             Container(
               margin: EdgeInsets.symmetric(vertical: 30.0, horizontal: 120.0),
               height: 50.0,
