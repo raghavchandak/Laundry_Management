@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nih_laundro/Utilities/Resuable_card.dart';
 import 'Display_screen.dart';
+import 'package:nih_laundro/Backend/shared_pref.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   //TODO: Create a model folder, make Home class, encapsulate and import.
   List<String> clothes = [
     'Shirt',

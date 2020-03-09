@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:nih_laundro/Backend/shared_pref.dart';
 
 class Display_screen extends StatefulWidget {
   List cloth;
@@ -13,6 +14,7 @@ class Display_screen extends StatefulWidget {
   @override
   _Display_screenState createState() => _Display_screenState();
 }
+
 //TODO: Extract count functionality, extract all complex widgets.
 class _Display_screenState extends State<Display_screen> {
   Widget createWidget(int i) {
@@ -56,8 +58,11 @@ class _Display_screenState extends State<Display_screen> {
         width: 0.0,
       );
   }
+
   //TODO: Extract widgets
   Widget build(BuildContext context) {
+    StorageService storageService = StorageService(
+        clothes: widget.cloth, clothCount: widget.count, total: widget.total);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -126,6 +131,9 @@ class _Display_screenState extends State<Display_screen> {
                       color: Color(0xFF4EB44B),
                       icon: Icons.check,
                       foregroundColor: Colors.white,
+                      onTap: () async {
+                        await storageService.saveClothes();
+                      },
                     ),
                   ],
                 )
