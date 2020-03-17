@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:nih_laundro/Utilities/Cloth.dart';
+import 'package:nih_laundro/Backend/shared_pref.dart';
 
 class DisplayScreen extends StatelessWidget {
 
@@ -109,8 +110,9 @@ class DisplayScreen extends StatelessWidget {
                       color: Color(0xFF4EB44B),
                       icon: Icons.check,
                       foregroundColor: Colors.white,
-                      onTap: () {
+                      onTap: () async{
                         print('Button Pressed');
+                        await StorageService().saveClothes(Cloth.getTotal());
                       },
                     ),
                   ],

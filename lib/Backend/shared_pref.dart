@@ -1,34 +1,31 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:nih_laundro/Utilities/Cloth.dart';
 
 class StorageService
 {
   SharedPreferences prefs;
-  List<String> clothes;
-  List<int> clothCount;
-  int total;
 
-  StorageService({this.clothes,this.clothCount,this.total}){
-    initialize();
-  }
-
-  void initialize() async
-  {
+  Future saveClothes(int total) async {
     prefs = await SharedPreferences.getInstance();
-  }
-
-  Future saveClothes() async {
-    await prefs.setStringList("clothes", clothes);
-    List<String> stringCountList = clothCount.map((e) => e.toString()).toList();
+    List<String> stringCountList = Cloth.CLOTH_LIST.map((e) => e.count.toString()).toList();
     await prefs.setStringList("clothCount", stringCountList);
     await prefs.setInt('Total', total);
-    print('Saved');
+    print('Saved in Shared Preferences : Count = $stringCountList and total = $total');
   }
 
-  Future<List<String>> getClothesList() async => prefs.getStringList("clothes");
+  Future<List<String>> getClothCountList() async{
+    prefs = await SharedPreferences.getInstance();
+    List<String> clothcount = prefs.getStringList("clothCount");
+    print('Cloth count list from sp : $clothcount');
+    return clothcount;
+  } 
 
-  Future<List<String>> getClothCountList() async => prefs.getStringList("clothCount");
+  Future<int> getTotal() async {
+    prefs = await SharedPreferences.getInstance();
+    int total = prefs.getInt("Total");
+    print('Cloth count list from sp : $total');
+    return total;
+  }
 
-  Future<int> getTotal() async => prefs.getInt('total');
+  Future<bool> isTotal() async => await getTotal() > 0 ? true : false;
 }
-
