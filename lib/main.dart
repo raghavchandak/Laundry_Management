@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nih_laundro/Screens/home_page.dart';
+import 'Screens/HomePage.screen.dart';
+
 
 void main() => runApp(MyApp());
 

@@ -2,23 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:nih_laundro/Backend/shared_pref.dart';
+import 'package:nih_laundro/Utilities/Cloth.dart';
 
-class Display_screen extends StatefulWidget {
-  List cloth;
-  List count;
-  int total;
+class DisplayScreen extends StatelessWidget {
 
-  Display_screen({this.cloth, this.count, this.total});
-
-  @override
-  _Display_screenState createState() => _Display_screenState();
-}
-
-//TODO: Extract count functionality, extract all complex widgets.
-class _Display_screenState extends State<Display_screen> {
   Widget createWidget(int i) {
-    if (widget.count[i] != 0)
+    if (Cloth.CLOTH_LIST[i].count != 0)
       return Card(
         child: Container(
           padding: EdgeInsets.only(left: 20.0),
@@ -33,7 +22,7 @@ class _Display_screenState extends State<Display_screen> {
           child: Row(
             children: <Widget>[
               Text(
-                '${widget.cloth[i]} : ',
+                '${Cloth.CLOTH_LIST[i].type} : ',
                 style: TextStyle(
                   color: Color(0xFF707070),
                   fontSize: 25.0,
@@ -41,7 +30,7 @@ class _Display_screenState extends State<Display_screen> {
                 ),
               ),
               Text(
-                widget.count[i].toString(),
+                Cloth.CLOTH_LIST[i].count.toString(),
                 style: TextStyle(
                   color: Color(0xFF707070),
                   fontSize: 20.0,
@@ -59,21 +48,10 @@ class _Display_screenState extends State<Display_screen> {
       );
   }
 
-  //TODO: Extract widgets
   Widget build(BuildContext context) {
-    StorageService storageService = StorageService(
-        clothes: widget.cloth, clothCount: widget.count, total: widget.total);
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'Laundry Management',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.white70,
+        title: Text('Laundry Management'),
       ),
       body: Container(
         color: Colors.brown.shade300,
@@ -92,7 +70,7 @@ class _Display_screenState extends State<Display_screen> {
                 Expanded(
                   child: ListView(
                     children: <Widget>[
-                      for (int i = 0; i < widget.count.length; i++)
+                      for (int i = 0; i < Cloth.CLOTH_LIST.length; i++)
                         createWidget(i),
                     ],
                   ),
@@ -114,7 +92,7 @@ class _Display_screenState extends State<Display_screen> {
                             size: 25.0, color: Colors.white),
                         Center(
                           child: Text(
-                            'Total : Rs. ${widget.total} + Miscellanous',
+                            'Total : Rs. ${Cloth.getTotal().toString()} + Miscellanous',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -131,8 +109,8 @@ class _Display_screenState extends State<Display_screen> {
                       color: Color(0xFF4EB44B),
                       icon: Icons.check,
                       foregroundColor: Colors.white,
-                      onTap: () async {
-                        await storageService.saveClothes();
+                      onTap: () {
+                        print('Button Pressed');
                       },
                     ),
                   ],
