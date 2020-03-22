@@ -7,6 +7,24 @@ import 'package:nih_laundro/Backend/shared_pref.dart';
 
 class DisplayScreen extends StatelessWidget {
 
+  DisplayScreen()
+  {
+    populate();
+  }
+
+  void populate()async
+  {
+    bool isTotal = await StorageService().isTotal();
+    if(isTotal)
+    {
+      List<String> clothcount = await StorageService().getClothCountList();
+      for(int i = 0;i< Cloth.CLOTH_LIST.length; i++)
+      {
+        Cloth.CLOTH_LIST[i].count = int.parse(clothcount[i]);
+      }
+    }
+  }
+
   Widget createWidget(int i) {
     if (Cloth.CLOTH_LIST[i].count != 0)
       return Card(
@@ -53,6 +71,7 @@ class DisplayScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Laundry Management'),
+        centerTitle: true,
       ),
       body: Container(
         color: Colors.brown.shade300,
@@ -70,7 +89,7 @@ class DisplayScreen extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: ListView(
-                    children: <Widget>[
+                    children: <Widget>[ 
                       for (int i = 0; i < Cloth.CLOTH_LIST.length; i++)
                         createWidget(i),
                     ],
@@ -116,6 +135,33 @@ class DisplayScreen extends StatelessWidget {
                       },
                     ),
                   ],
+                ),
+                SizedBox(
+                  height : 5.0,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: 45.0,
+                  child: FlatButton(
+                    color: Color(0xFF2282B9),
+                    child: Text(
+                      'Reset',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    onPressed: () async
+                    {
+                      await StorageService().deleteData();
+                      for(int i = 0; i < Cloth.CLOTH_LIST.length; i++)
+                      {
+                        Cloth.CLOTH_LIST[i].count = 0;
+                      }
+                      Navigator.pop(context);
+                    },
+                  ),
                 )
               ],
             ),

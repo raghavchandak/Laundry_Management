@@ -11,7 +11,10 @@ class Home extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Laundry'),
+            title: Text(
+              'Laundry Management',
+              ),
+              centerTitle: true,
           ),
           body: Column(
             children: <Widget>[

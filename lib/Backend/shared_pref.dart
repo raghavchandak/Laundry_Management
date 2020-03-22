@@ -23,9 +23,22 @@ class StorageService
   Future<int> getTotal() async {
     prefs = await SharedPreferences.getInstance();
     int total = prefs.getInt("Total");
-    print('Cloth count list from sp : $total');
+    print('Total from sp : $total');
     return total;
   }
 
-  Future<bool> isTotal() async => await getTotal() > 0 ? true : false;
+  Future<bool> isTotal() async{
+    int total = await getTotal();
+    if(total!= null)
+    return true;
+    return false;
+  }
+
+  void deleteData() async
+  {
+    prefs = await SharedPreferences.getInstance();
+    prefs.remove('clothcount');
+    prefs.remove('total');
+    print('Items deleted');
+  }
 }
