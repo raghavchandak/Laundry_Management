@@ -1,7 +1,17 @@
 import 'package:nih_laundro/model/model.dart';
 
-class IncreaseClothCount{}
+//! Defining the actions which will be dispatched
 
-class DecreaseClothCount{}
+class IncreaseClothCount {
+  final int clothNo;
 
-class ResetCount{}
+  IncreaseClothCount({this.clothNo});
+}
+
+class DecreaseClothCount {
+  final int clothNo;
+
+  DecreaseClothCount({this.clothNo});
+}
+
+class ResetCount {}
