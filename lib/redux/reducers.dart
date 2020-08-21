@@ -31,5 +31,9 @@ List<Cloth> clothReducer(List<Cloth> state, action) {
     return []..addAll(state);
   }
 
+  if (action is LoadedClothesAction) {
+    return action.clothes;
+  }
+
   return state;
 }

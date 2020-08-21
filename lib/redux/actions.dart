@@ -15,3 +15,13 @@ class DecreaseClothCount {
 }
 
 class ResetCount {}
+
+class SaveClothesAction {}
+
+class GetClothesAction {}
+
+class LoadedClothesAction {
+  final List<Cloth> clothes;
+
+  LoadedClothesAction({this.clothes});
+}

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:nih_laundro/Widgets/done_button.dart';
+import 'package:nih_laundro/redux/middleware.dart';
 import 'package:redux/redux.dart';
 
 import 'Screens/display_screen.dart';
@@ -17,8 +18,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //! Creating the store which holds the AppState object, and wrapping the entire app with the StoreProvider
 
-    final Store<AppState> store =
-        Store<AppState>(appStateReducer, initialState: AppState.initialState());
+    final Store<AppState> store = Store<AppState>(appStateReducer,
+        initialState: AppState.initialState(),
+        middleware: [appStateMiddleware]);
     return StoreProvider(
       store: store,
       child: MaterialApp(
@@ -80,12 +82,15 @@ class ViewModel {
   final Function(int) onIncreaseCloth;
   final Function(int) onDecreaseCloth;
   final Function() onResetClothCount;
+  final Function() onSaveClothes;
 
-  ViewModel(
-      {this.clothes,
-      this.onIncreaseCloth,
-      this.onDecreaseCloth,
-      this.onResetClothCount});
+  ViewModel({
+    this.clothes,
+    this.onIncreaseCloth,
+    this.onDecreaseCloth,
+    this.onResetClothCount,
+    this.onSaveClothes,
+  });
 
   factory ViewModel.create(Store<AppState> store) {
     _onIncreaseCloth(int clothNo) {
@@ -100,10 +105,16 @@ class ViewModel {
       store.dispatch(ResetCount());
     }
 
+    _onSaveClothes() {
+      store.dispatch(SaveClothesAction());
+    }
+
     return ViewModel(
-        clothes: store.state.clothes,
-        onIncreaseCloth: _onIncreaseCloth,
-        onDecreaseCloth: _onDecreaseCloth,
-        onResetClothCount: _onResetClothCount);
+      clothes: store.state.clothes,
+      onIncreaseCloth: _onIncreaseCloth,
+      onDecreaseCloth: _onDecreaseCloth,
+      onResetClothCount: _onResetClothCount,
+      onSaveClothes: _onSaveClothes,
+    );
   }
 }

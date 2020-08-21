@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 //!Creating basic model of object
 
 class Cloth {
-  String clothName;
-  int price;
+  final String clothName;
+  final int price;
   int count;
 
   Cloth({this.clothName, this.price, this.count = 0});
@@ -15,6 +15,17 @@ class Cloth {
         price: price ?? this.price,
         count: count ?? this.count);
   }
+
+  Cloth.fromJson(Map json)
+      : clothName = json['clothName'],
+        price = json['price'],
+        count = json['count'];
+
+  Map toJson() => {
+        'clothName': clothName,
+        'price': (price as int),
+        'count': (count as int)
+      };
 }
 
 //!Appstate holds the entire state of the app in a single object
@@ -40,4 +51,13 @@ class AppState {
           Cloth(price: 80, clothName: 'Shoes'),
           Cloth(price: 0, clothName: 'Misc')
         ];
+
+  AppState.fromJson(Map json)
+      : clothes = (json['clothes'] as List)
+            .map((cloth) => Cloth.fromJson(cloth))
+            .toList();
+
+  Map toJson() => {
+        ['clothes']: clothes
+      };
 }

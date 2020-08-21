@@ -123,7 +123,7 @@ class DisplayScreen extends StatelessWidget {
                       color: Color(0xFF4EB44B),
                       icon: Icons.check,
                       foregroundColor: Colors.white,
-                      onTap: () => print('Saved!'),
+                      onTap: () => model.onSaveClothes,
                     ),
                   ],
                 ),
