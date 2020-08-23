@@ -8,6 +8,7 @@ import 'package:nih_laundro/model/model.dart';
 import 'package:nih_laundro/redux/actions.dart';
 
 void saveToPrefs(AppState state) async {
+  print('Saving!');
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   var string = json.encode(state.toJson());
   await sharedPreferences.setString('clothesState', string);

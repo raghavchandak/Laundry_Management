@@ -1,9 +1,11 @@
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:nih_laundro/Widgets/done_button.dart';
 import 'package:nih_laundro/redux/middleware.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_lifecycle/flutter_lifecycle.dart';
 
 import 'Screens/display_screen.dart';
 import 'Widgets/Reusable Card/reusable_card.dart';
@@ -21,17 +23,39 @@ class MyApp extends StatelessWidget {
     final Store<AppState> store = Store<AppState>(appStateReducer,
         initialState: AppState.initialState(),
         middleware: [appStateMiddleware]);
-    return StoreProvider(
+
+    return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
         title: 'Laundry Management',
-        home: HomePage(),
+        home: StoreBuilder<AppState>(
+          onInit: (store) => store.dispatch(
+            GetClothesAction(),
+          ),
+          builder: (BuildContext context, Store<AppState> store) => HomePage(
+            store: store,
+          ),
+        ),
       ),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
+  final Store<AppState> store;
+
+  const HomePage({Key key, this.store}) : super(key: key);
+
+  bool isEmpty() {
+    List<Cloth> clothList = store.state.clothes;
+    for (int i = 0; i < clothList.length; i++) {
+      if (clothList[i].count != 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

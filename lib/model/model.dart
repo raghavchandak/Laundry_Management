@@ -57,7 +57,5 @@ class AppState {
             .map((cloth) => Cloth.fromJson(cloth))
             .toList();
 
-  Map toJson() => {
-        ['clothes']: clothes
-      };
+  Map toJson() => {'clothes': clothes};
 }
