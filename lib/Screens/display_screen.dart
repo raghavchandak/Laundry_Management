@@ -127,6 +127,25 @@ class DisplayScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: 45.0,
+                  child: FlatButton(
+                    color: Color(0xFF2282B9),
+                    child: Text(
+                      'Reset',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    onPressed: () => model.onResetClothCount(),
+                  ),
+                ),
               ],
             ),
           ),
