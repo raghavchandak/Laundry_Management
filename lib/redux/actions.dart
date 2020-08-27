@@ -25,3 +25,13 @@ class LoadedClothesAction {
 
   LoadedClothesAction({this.clothes});
 }
+
+class SetPrefsVariable {}
+
+class LoadedPrefsVariable {
+  final bool isLoadedFromPrefs;
+
+  LoadedPrefsVariable({this.isLoadedFromPrefs});
+}
+
+class ResetPrefsVariable {}

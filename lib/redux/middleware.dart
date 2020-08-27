@@ -34,9 +34,18 @@ void appStateMiddleware(
 
   if (action is GetClothesAction) {
     await loadFromPrefs().then(
-      (state) => store.dispatch(
-        LoadedClothesAction(clothes: state.clothes),
-      ),
+      (state) {
+        store.dispatch(
+          LoadedClothesAction(
+            clothes: state.clothes,
+          ),
+        );
+        store.dispatch(
+          LoadedPrefsVariable(
+            isLoadedFromPrefs: state.isLoadedFromPrefs,
+          ),
+        );
+      },
     );
   }
 }

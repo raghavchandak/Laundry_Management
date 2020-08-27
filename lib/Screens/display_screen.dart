@@ -2,24 +2,37 @@ import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:nih_laundro/main.dart';
+import 'package:nih_laundro/model/model.dart';
+import 'package:redux/redux.dart';
+import 'package:nih_laundro/redux/actions.dart';
 
 class DisplayScreen extends StatelessWidget {
-  final ViewModel model;
+  final Store<AppState> store;
 
-  const DisplayScreen({Key key, this.model}) : super(key: key);
+  const DisplayScreen({Key key, this.store}) : super(key: key);
 
   int getTotal() {
     int total = 0;
 
-    for (int i = 0; i < model.clothes.length; i++) {
-      total += model.clothes[i].count * model.clothes[i].price;
+    for (int i = 0; i < store.state.clothes.length; i++) {
+      total += store.state.clothes[i].count * store.state.clothes[i].price;
     }
 
     return total;
   }
 
+  void dispatchOnSaveClothes() {
+    store.dispatch(SetPrefsVariable());
+    store.dispatch(SaveClothesAction());
+  }
+
+  void dispatchResetCount() {
+    store.dispatch(ResetPrefsVariable());
+    store.dispatch(ResetCount());
+  }
+
   Widget createWidget(int i) {
-    if (model.clothes[i].count != 0)
+    if (store.state.clothes[i].count != 0)
       return Card(
         child: Container(
           padding: EdgeInsets.only(left: 20.0),
@@ -34,7 +47,7 @@ class DisplayScreen extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                '${model.clothes[i].clothName} : ',
+                '${store.state.clothes[i].clothName} : ',
                 style: TextStyle(
                   color: Color(0xFF707070),
                   fontSize: 25.0,
@@ -42,7 +55,7 @@ class DisplayScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                model.clothes[i].count.toString(),
+                store.state.clothes[i].count.toString(),
                 style: TextStyle(
                   color: Color(0xFF707070),
                   fontSize: 20.0,
@@ -84,7 +97,7 @@ class DisplayScreen extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     children: <Widget>[
-                      for (int i = 0; i < model.clothes.length; i++)
+                      for (int i = 0; i < store.state.clothes.length; i++)
                         createWidget(i),
                     ],
                   ),
@@ -123,7 +136,7 @@ class DisplayScreen extends StatelessWidget {
                       color: Color(0xFF4EB44B),
                       icon: Icons.check,
                       foregroundColor: Colors.white,
-                      onTap: () => model.onSaveClothes(),
+                      onTap: () => dispatchOnSaveClothes(),
                     ),
                   ],
                 ),
@@ -143,7 +156,16 @@ class DisplayScreen extends StatelessWidget {
                         fontSize: 20.0,
                       ),
                     ),
-                    onPressed: () => model.onResetClothCount(),
+                    onPressed: () {
+                      dispatchResetCount();
+                      Navigator.of(context).pushReplacement(
+                        new MaterialPageRoute(
+                          builder: (BuildContext context) => HomePage(
+                            store: store,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

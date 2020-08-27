@@ -5,8 +5,8 @@ import 'package:nih_laundro/redux/actions.dart';
 
 AppState appStateReducer(AppState state, action) {
   return AppState(
-    clothes: clothReducer(state.clothes, action),
-  );
+      clothes: clothReducer(state.clothes, action),
+      isLoadedFromPrefs: sharedPrefsReducer(state.isLoadedFromPrefs, action));
 }
 
 List<Cloth> clothReducer(List<Cloth> state, action) {
@@ -35,5 +35,22 @@ List<Cloth> clothReducer(List<Cloth> state, action) {
     return action.clothes;
   }
 
+  return state;
+}
+
+bool sharedPrefsReducer(bool state, action) {
+  //Make modifications according to action and return a boolean
+
+  if (action is SetPrefsVariable) {
+    return true;
+  }
+
+  if (action is LoadedPrefsVariable) {
+    return action.isLoadedFromPrefs;
+  }
+
+  if (action is ResetPrefsVariable) {
+    return false;
+  }
   return state;
 }

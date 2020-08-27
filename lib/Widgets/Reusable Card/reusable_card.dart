@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nih_laundro/Widgets/Reusable Card/reusable_card_right_side.dart';
 import 'package:nih_laundro/main.dart';
+import 'package:nih_laundro/model/model.dart';
+import 'package:redux/redux.dart';
 
 class ReusableCard extends StatelessWidget {
-  final ViewModel model;
+  final Store<AppState> store;
+  final List<Cloth> clothes;
   final int clothNo;
 
-  ReusableCard({this.model, this.clothNo});
+  ReusableCard({this.clothes, this.clothNo, this.store});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class ReusableCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xff7c94b6),
         image: DecorationImage(
-          image: AssetImage('images/${model.clothes[clothNo].clothName}.jpeg'),
+          image: AssetImage('images/${clothes[clothNo].clothName}.jpeg'),
           colorFilter: ColorFilter.mode(
               Colors.brown.withOpacity(0.55), BlendMode.hardLight),
           fit: BoxFit.cover,
@@ -31,7 +34,7 @@ class ReusableCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '${model.clothes[clothNo].clothName}',
+                  '${clothes[clothNo].clothName}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32.0,
@@ -40,7 +43,7 @@ class ReusableCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Price: Rs. ${model.clothes[clothNo].price}',
+                  'Price: Rs. ${clothes[clothNo].price}',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Montserrat',
@@ -56,7 +59,8 @@ class ReusableCard extends StatelessWidget {
           Expanded(
             child: ReusableCardRightSide(
               clothNo: clothNo,
-              model: model,
+              clothes: clothes,
+              store: store,
             ),
           )
         ],

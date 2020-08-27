@@ -32,8 +32,9 @@ class Cloth {
 
 class AppState {
   final List<Cloth> clothes; //State of the app is defined by a list of clothes
+  final bool isLoadedFromPrefs;
 
-  AppState({@required this.clothes});
+  AppState({@required this.isLoadedFromPrefs, @required this.clothes});
 
   AppState.initialState()
       : clothes = [
@@ -50,12 +51,17 @@ class AppState {
           Cloth(price: 8, clothName: 'Socks'),
           Cloth(price: 80, clothName: 'Shoes'),
           Cloth(price: 0, clothName: 'Misc')
-        ];
+        ],
+        isLoadedFromPrefs = false;
 
   AppState.fromJson(Map json)
       : clothes = (json['clothes'] as List)
             .map((cloth) => Cloth.fromJson(cloth))
-            .toList();
+            .toList(),
+        isLoadedFromPrefs = json['isLoadedFromPrefs'];
 
-  Map toJson() => {'clothes': clothes};
+  Map toJson() => {
+        'clothes': clothes,
+        'isLoadedFromPrefs': isLoadedFromPrefs,
+      };
 }

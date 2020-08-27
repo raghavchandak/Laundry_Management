@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:nih_laundro/main.dart';
+import 'package:nih_laundro/model/model.dart';
+import 'package:redux/redux.dart';
+import 'package:nih_laundro/redux/actions.dart';
 
 class ReusableCardRightSide extends StatelessWidget {
-  final ViewModel model;
+  final Store<AppState> store;
+  final List<Cloth> clothes;
   final int clothNo;
 
-  ReusableCardRightSide({this.clothNo, this.model});
+  ReusableCardRightSide({this.clothNo, this.clothes, this.store});
+
+  void dispatchDecreaseClothAction(int clothNo) {
+    store.dispatch(DecreaseClothCount(clothNo: clothNo));
+  }
+
+  void dispatchIncreaseClothAction(int clothNo) {
+    store.dispatch(IncreaseClothCount(clothNo: clothNo));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +32,10 @@ class ReusableCardRightSide extends StatelessWidget {
             Icons.remove,
             color: Colors.black,
           ),
-          onPressed: () => model.onDecreaseCloth(clothNo),
+          onPressed: () => dispatchDecreaseClothAction(clothNo),
         ),
         Text(
-          '${model.clothes[clothNo].count}',
+          '${clothes[clothNo].count}',
           style: TextStyle(
             color: Colors.white,
             fontSize: 30.0,
@@ -31,11 +43,10 @@ class ReusableCardRightSide extends StatelessWidget {
           ),
         ),
         FloatingActionButton(
-          heroTag: null,
-          backgroundColor: Colors.white,
-          child: Icon(Icons.add, color: Colors.black),
-          onPressed: () => model.onIncreaseCloth(clothNo),
-        )
+            heroTag: null,
+            backgroundColor: Colors.white,
+            child: Icon(Icons.add, color: Colors.black),
+            onPressed: () => dispatchIncreaseClothAction(clothNo))
       ],
     );
   }
