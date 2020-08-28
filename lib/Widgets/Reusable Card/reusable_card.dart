@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nih_laundro/Widgets/Reusable Card/reusable_card_right_side.dart';
-import 'package:nih_laundro/main.dart';
 import 'package:nih_laundro/model/model.dart';
 import 'package:redux/redux.dart';
 
