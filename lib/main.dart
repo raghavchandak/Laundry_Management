@@ -1,38 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:nih_laundro/Screens/DisplayScreen.screen.dart';
-import 'Screens/HomePage.screen.dart';
-import 'package:nih_laundro/Backend/shared_pref.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:nih_laundro/Screens/home_page.dart';
+import 'package:nih_laundro/redux/middleware.dart';
+import 'package:redux/redux.dart';
 
+import 'Screens/display_screen.dart';
+import 'redux/actions.dart';
+import 'redux/reducers.dart';
+import 'model/model.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
+class MyApp extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-
-  Widget page = Home();
-  @override
-  void initState()
-  {
-    super.initState();
-    setScreen();
-  }
-
-  void setScreen() async
-  {
-    Widget currentPage = await StorageService().isTotal() ? DisplayScreen() : Home();
-    setState(() {
-      page = currentPage; 
-    });
-  }
-
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: page,
+    //! Creating the store which holds the AppState object, and wrapping the entire app with the StoreProvider
+
+    final Store<AppState> store = Store<AppState>(appStateReducer,
+        initialState: AppState.initialState(),
+        middleware: [appStateMiddleware]);
+
+    return StoreProvider<AppState>(
+      store: store,
+      child: MaterialApp(
+        title: 'Laundry Management',
+        home: StoreBuilder<AppState>(
+          onInit: (store) {
+            store.dispatch(
+              GetClothesAction(),
+            );
+            print(store.state.isLoadedFromPrefs);
+          },
+          builder: (BuildContext context, Store<AppState> store) =>
+              store.state.isLoadedFromPrefs
+                  ? DisplayScreen(
+                      store: store,
+                    )
+                  : HomePage(
+                      store: store,
+                    ),
+        ),
+      ),
     );
   }
 }

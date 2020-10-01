@@ -8,9 +8,13 @@ class DoneButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenheight = MediaQuery.of(context).size.height;
+    double screenwidth = MediaQuery.of(context).size.width;
+
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 30.0, horizontal: 120.0),
-      height: 50.0,
+      margin: EdgeInsets.symmetric(
+          vertical: screenheight * 0.03, horizontal: screenwidth * 0.1),
+      height: screenheight * 0.06,
       child: FlatButton(
         color: Colors.blue,
         textColor: Colors.white,

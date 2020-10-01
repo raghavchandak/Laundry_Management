@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nih_laundro/Widgets/reusableCard/reusableCardRightSide.dart';
+import 'package:nih_laundro/Widgets/Reusable Card/reusable_card_right_side.dart';
+import 'package:nih_laundro/model/model.dart';
+import 'package:redux/redux.dart';
 
 class ReusableCard extends StatelessWidget {
-  final String cloth;
+  final Store<AppState> store;
+  final List<Cloth> clothes;
   final int clothNo;
-  final int price;
-  final int quantity;
 
-  ReusableCard({this.cloth, this.clothNo, this.price, this.quantity});
+  ReusableCard({this.clothes, this.clothNo, this.store});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class ReusableCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xff7c94b6),
         image: DecorationImage(
-          image: AssetImage('images/$cloth.jpeg'),
+          image: AssetImage('images/${clothes[clothNo].clothName}.jpeg'),
           colorFilter: ColorFilter.mode(
               Colors.brown.withOpacity(0.55), BlendMode.hardLight),
           fit: BoxFit.cover,
@@ -32,7 +33,7 @@ class ReusableCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '$cloth',
+                  '${clothes[clothNo].clothName}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32.0,
@@ -41,7 +42,7 @@ class ReusableCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Price: Rs. $price',
+                  'Price: Rs. ${clothes[clothNo].price}',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Montserrat',
@@ -55,7 +56,11 @@ class ReusableCard extends StatelessWidget {
             width: 10.0,
           ),
           Expanded(
-            child: ReusableCardRightSide(clothNo: clothNo,),
+            child: ReusableCardRightSide(
+              clothNo: clothNo,
+              clothes: clothes,
+              store: store,
+            ),
           )
         ],
       ),
